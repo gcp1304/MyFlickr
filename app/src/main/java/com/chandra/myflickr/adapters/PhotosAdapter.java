@@ -58,11 +58,11 @@ public class PhotosAdapter extends RecyclerView.Adapter<PhotosAdapter.ViewHolder
 
         final FlickrPhoto photo = mDataArray.get(position);
         String imageUrl = "";
-        int commentSum = 0;
+        //int commentSum = 0;
 
         if (photo != null) {
             imageUrl = photo.getUrl();
-            commentSum = photo.getCommentSum();
+            //commentSum = photo.getCommentSum();
         }
 
         //Config
@@ -70,19 +70,7 @@ public class PhotosAdapter extends RecyclerView.Adapter<PhotosAdapter.ViewHolder
         params.height = imageHeight;
         holder.ivPhoto.setLayoutParams(params);
 
-        //Setting
-        holder.commentCounter.setText(String.valueOf(commentSum));
-
         loadImage(holder, imageUrl);
-
-        //Event
-        holder.btnComment.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onCommentClicked(holder, photo, position);
-            }
-        });
-
 
         holder.ivPhoto.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -95,12 +83,6 @@ public class PhotosAdapter extends RecyclerView.Adapter<PhotosAdapter.ViewHolder
     private void loadImage(final ViewHolder holder, String imageUrl) {
 
         holder.ivPhoto.setImageURI(imageUrl);
-    }
-
-    protected void onCommentClicked(final ViewHolder holder, final FlickrPhoto photo, final int position) {
-        Intent intent = CommentsActivity.newInstance(mContext, photo, position);
-        mContext.startActivity(intent);
-
     }
 
     @Override
@@ -118,13 +100,6 @@ public class PhotosAdapter extends RecyclerView.Adapter<PhotosAdapter.ViewHolder
 
         @BindView(R.id.image_view)
         SimpleDraweeView ivPhoto;
-
-        @BindView(R.id.iv_comment)
-        ImageView btnComment;
-
-        @BindView(R.id.comment_counter)
-        TextView commentCounter;
-
 
         public ViewHolder(View itemView) {
             super(itemView);

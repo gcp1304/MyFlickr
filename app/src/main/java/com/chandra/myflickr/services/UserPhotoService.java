@@ -30,6 +30,7 @@ public class UserPhotoService extends IntentService {
     public static final String PHOTO_ID = "com.chandra.myflickr.services.extra.PHOTO_ID";
     public static final String PHOTO_COMMENT_AUTHOR = "com.chandra.myflickr.services.extra.PHOTO_COMMENT_AUTHOR";
     public static final String PHOTO_COMMENT = "com.chandra.myflickr.services.extra.PHOTO_COMMENT";
+    public static final String NUM_OF_PHOTOS = "com.chandra.myflickr.services.extra.NUM_OF_PHOTOS";
 
     private static final String NAME = UserPhotoService.class.getSimpleName();
 
@@ -44,7 +45,7 @@ public class UserPhotoService extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent intent) {
-        mFlickrManager = FlickrManager.getInstance(this);
+        mFlickrManager = FlickrManager.getInstance();
         if (intent != null) {
             final String action = intent.getAction();
             if (ACTION_GET_PHOTOS.equals(action)) {

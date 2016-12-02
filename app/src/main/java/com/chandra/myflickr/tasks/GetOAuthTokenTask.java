@@ -27,7 +27,7 @@ public class GetOAuthTokenTask extends AsyncTask<String, Integer, OAuth> {
         String oauthTokenSecret = strings[1];
         String oauthVerifier = strings[2];
 
-        Flickr flickr = FlickrManager.getInstance(mActivity.getApplicationContext()).getFlickr();
+        Flickr flickr = FlickrManager.getInstance().getFlickr();
         OAuthInterface oauthApi = flickr.getOAuthInterface();
         try {
             return oauthApi.getAccessToken(oauthToken, oauthTokenSecret, oauthVerifier);

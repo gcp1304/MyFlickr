@@ -8,7 +8,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.NavUtils;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.view.Menu;
@@ -129,8 +129,8 @@ public class PhotoGalleryActivity extends BaseActivity implements
                 R.color.swipe_color_4);
 
         //Recycler View
-        mPhotoRecyclerView.setHasFixedSize(true);
-        mLayoutManager = new LinearLayoutManager(this);
+        //mPhotoRecyclerView.setHasFixedSize(true);
+        mLayoutManager = new GridLayoutManager(this, 2);
         mPhotoRecyclerView.setLayoutManager(mLayoutManager);
 
         mAdapter = new PhotosAdapter(this, mDataArray);
@@ -297,7 +297,7 @@ public class PhotoGalleryActivity extends BaseActivity implements
             @Override
             public void run() {
                 FlickrPhoto photo = mDataArray.get(position);
-                mDataArray.get(position).setCommentSum(photo.getCommentSum() + 1);
+                //mDataArray.get(position).setCommentSum(photo.getCommentSum() + 1);
                 //TODO : This doesn't update counter automatically
                 //((PhotosAdapter) mAdapter).updateDataArray(mDataArray);
                 mAdapter.notifyItemChanged(position);
