@@ -44,7 +44,7 @@ public class UserPhotoService extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent intent) {
-        mFlickrManager = FlickrManager.getInstance();
+        mFlickrManager = FlickrManager.getInstance(this);
         if (intent != null) {
             final String action = intent.getAction();
             if (ACTION_GET_PHOTOS.equals(action)) {

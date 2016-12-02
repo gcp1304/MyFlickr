@@ -54,7 +54,7 @@ public class FlickrLoginTask extends AsyncTask<Void, Integer, String> {
     protected String doInBackground(Void... params) {
         try {
 
-            Flickr flickr = FlickrManager.getInstance().getFlickr();
+            Flickr flickr = FlickrManager.getInstance(mContext).getFlickr();
             if (flickr == null) {
                 return null;
             }

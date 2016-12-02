@@ -1,5 +1,8 @@
 package com.chandra.myflickr.managers;
 
+import android.content.Context;
+
+import com.chandra.myflickr.R;
 import com.chandra.myflickr.misc.Constants;
 import com.chandra.myflickr.utils.StringUtils;
 import com.googlecode.flickrjandroid.Flickr;
@@ -34,14 +37,17 @@ public class FlickrManager {
 
     private static final Logger logger = LoggerFactory.getLogger(FlickrManager.class.getSimpleName());
     private static FlickrManager instance = null;
-    private static final String CLIENT_ID="1b7a79d113e045a63dd900b8042c4a06"; //$NON-NLS-1$
-    private static final String CLIENT_SECRET ="759d629055103776"; //$NON-NLS-1$
+    private final String CLIENT_ID; //$NON-NLS-1$
+    private final String CLIENT_SECRET; //$NON-NLS-1$
 
-    private FlickrManager() {}
+    private FlickrManager(Context context) {
+        CLIENT_ID = context.getResources().getString(R.string.flickr_api_key);
+        CLIENT_SECRET = context.getResources().getString(R.string.flickr_api_secret);
+    }
 
-    public static FlickrManager getInstance() {
+    public static FlickrManager getInstance(Context context) {
         if (instance == null) {
-            instance = new FlickrManager();
+            instance = new FlickrManager(context);
         }
         return instance;
     }
