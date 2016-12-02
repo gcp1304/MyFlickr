@@ -13,13 +13,13 @@ public class FlickrPhoto implements Serializable {
     private String uid;
     private String name;
     private String url;
-    private int commentSum;
+    private int commentSum = 0;
 
     public FlickrPhoto(Photo photo) {
         this.uid = photo.getId();
         this.name = photo.getTitle();
 
-        this.commentSum = photo.getComments();
+        //this.commentSum = photo.getComments();
 
         StringBuilder sbUrl = new StringBuilder(IMAGE_URL);
         sbUrl.append(photo.getFarm());

@@ -97,6 +97,12 @@ public class PhotoGalleryActivity extends BaseActivity implements
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        onRefresh();
+    }
+
+    @Override
     protected void onStop() {
         super.onStop();
         EventBus.getDefault().unregister(this);
@@ -246,7 +252,7 @@ public class PhotoGalleryActivity extends BaseActivity implements
 
     protected void getDataFromServer(boolean isSwipeRefresh, String[] tags) {
         if (!isSwipeRefresh) {
-            showLoadingDialog();
+            //showLoadingDialog();
         }
 
         Intent intent = new Intent(this, UserPhotoService.class);

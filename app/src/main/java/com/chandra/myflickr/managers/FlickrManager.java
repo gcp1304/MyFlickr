@@ -79,7 +79,7 @@ public class FlickrManager {
             return null;
         PhotoList photoList = null;
         try {
-            photoList = photosInterface.getRecent(null, Constants.NUM_OF_PHOTOS_PER_PAGE, Constants.NUM_OF_PAGES);
+            photoList = photosInterface.getRecent(null, 500, 0);
         } catch (IOException e) {
             e.printStackTrace();
         } catch (FlickrException e) {
@@ -217,6 +217,7 @@ public class FlickrManager {
     }
 
     public int getCommentsCount(String photoId) {
+        //TODO : Keep an eye on time to download comments count
         final CommentsInterface commentsInterface = getCommentsInterface();
         if (commentsInterface == null || photoId == null) {
             return 0;
