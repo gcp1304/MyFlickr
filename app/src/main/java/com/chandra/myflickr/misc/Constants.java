@@ -9,6 +9,6 @@ public class Constants {
     public static final String KEY_USER_NAME = "jayplabs-myflickr-userName"; //$NON-NLS-1$
     public static final String KEY_USER_ID = "jayplabs-myflickr-userId"; //$NON-NLS-1$
 
-    public static final int NUM_OF_PHOTOS_PER_PAGE = 30;
-    public static final int NUM_OF_PAGES = 3;
+    public static final int NUM_OF_PHOTOS_PER_PAGE = 50;
+    public static final int NUM_OF_PAGES = 1;
 }

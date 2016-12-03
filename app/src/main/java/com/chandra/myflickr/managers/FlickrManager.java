@@ -37,17 +37,15 @@ public class FlickrManager {
 
     private static final Logger logger = LoggerFactory.getLogger(FlickrManager.class.getSimpleName());
     private static FlickrManager instance = null;
-    private final String CLIENT_ID; //$NON-NLS-1$
-    private final String CLIENT_SECRET; //$NON-NLS-1$
+    private final static String CLIENT_ID = "aefd9a640938cb688a18e17cdcfaa84a"; //$NON-NLS-1$
+    private final static String CLIENT_SECRET = "92ee071195468b9d"; //$NON-NLS-1$
 
-    private FlickrManager(Context context) {
-        CLIENT_ID = context.getResources().getString(R.string.flickr_api_key);
-        CLIENT_SECRET = context.getResources().getString(R.string.flickr_api_secret);
+    private FlickrManager() {
     }
 
-    public static FlickrManager getInstance(Context context) {
+    public static FlickrManager getInstance() {
         if (instance == null) {
-            instance = new FlickrManager(context);
+            instance = new FlickrManager();
         }
         return instance;
     }
@@ -81,7 +79,7 @@ public class FlickrManager {
             return null;
         PhotoList photoList = null;
         try {
-            photoList = photosInterface.getRecent(null, Constants.NUM_OF_PHOTOS_PER_PAGE, Constants.NUM_OF_PAGES);
+            photoList = photosInterface.getRecent(null, 500, 0);
         } catch (IOException e) {
             e.printStackTrace();
         } catch (FlickrException e) {
@@ -219,6 +217,7 @@ public class FlickrManager {
     }
 
     public int getCommentsCount(String photoId) {
+        //TODO : Keep an eye on time to download comments count
         final CommentsInterface commentsInterface = getCommentsInterface();
         if (commentsInterface == null || photoId == null) {
             return 0;

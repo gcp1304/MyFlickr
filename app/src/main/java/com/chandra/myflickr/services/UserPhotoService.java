@@ -2,6 +2,7 @@ package com.chandra.myflickr.services;
 
 import android.app.IntentService;
 import android.content.Intent;
+import android.util.Log;
 
 import com.chandra.myflickr.events.CommentsDownloadedEvent;
 import com.chandra.myflickr.events.FlickrPhotoCommentEvent;
@@ -14,12 +15,16 @@ import com.googlecode.flickrjandroid.photos.PhotoList;
 import com.googlecode.flickrjandroid.photos.comments.Comment;
 
 import org.greenrobot.eventbus.EventBus;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
 public class UserPhotoService extends IntentService {
+
+    private static Logger logger = LoggerFactory.getLogger(UserPhotoService.class.getSimpleName());
 
     public static final String ACTION_GET_PHOTOS = "com.chandra.myflickr.services.action.GET_PHOTOS";
     public static final String ACTION_ADD_COMMENT = "com.chandra.myflickr.services.action.ADD_COMMENT";
@@ -30,6 +35,7 @@ public class UserPhotoService extends IntentService {
     public static final String PHOTO_ID = "com.chandra.myflickr.services.extra.PHOTO_ID";
     public static final String PHOTO_COMMENT_AUTHOR = "com.chandra.myflickr.services.extra.PHOTO_COMMENT_AUTHOR";
     public static final String PHOTO_COMMENT = "com.chandra.myflickr.services.extra.PHOTO_COMMENT";
+    public static final String NUM_OF_PHOTOS = "com.chandra.myflickr.services.extra.NUM_OF_PHOTOS";
 
     private static final String NAME = UserPhotoService.class.getSimpleName();
 
@@ -44,7 +50,7 @@ public class UserPhotoService extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent intent) {
-        mFlickrManager = FlickrManager.getInstance(this);
+        mFlickrManager = FlickrManager.getInstance();
         if (intent != null) {
             final String action = intent.getAction();
             if (ACTION_GET_PHOTOS.equals(action)) {
@@ -64,7 +70,7 @@ public class UserPhotoService extends IntentService {
                     EventBus.getDefault().post(new FlickrPhotoEvent(null));
                     return;
                 }
-
+                Log.d("CHANDRA", "Photo Count : " + photoList.size());
                 ArrayList<FlickrPhoto> mDataArray = convertDataToMyDataModel(photoList);
                 EventBus.getDefault().post(new FlickrPhotoEvent(mDataArray));
             } else if (ACTION_ADD_COMMENT.equals(action)) {
@@ -118,11 +124,14 @@ public class UserPhotoService extends IntentService {
             return null;
         }
 
+        logger.debug("JSON Response count : " + photos.size());
+
         ArrayList<FlickrPhoto> newDataArray = new ArrayList<>();
         for (Photo photo : photos) {
             FlickrPhoto mPhoto = new FlickrPhoto(photo);
-            int commentSum = mFlickrManager.getCommentsCount(photo.getId());
-            mPhoto.setCommentSum(commentSum);
+            //TODO : This might be consuming time
+            //int commentSum = mFlickrManager.getCommentsCount(photo.getId());
+            //mPhoto.setCommentSum(commentSum);
             newDataArray.add(mPhoto);
         }
 

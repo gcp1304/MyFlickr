@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="flickr_api_key" translatable="false">
-        YOUR_API_KEY
+        1b7a79d113e045a63dd900b8042c4a06
     </string>
     <string name="flickr_api_secret" translatable="false">
-        YOUR_API_KEY_SECRET
+        759d629055103776
     </string>
 </resources>

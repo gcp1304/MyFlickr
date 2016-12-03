@@ -1,19 +1,18 @@
 package com.chandra.myflickr.adapters;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TextView;
+import android.widget.ViewAnimator;
 
 import com.chandra.myflickr.R;
-import com.chandra.myflickr.activities.CommentsActivity;
 import com.chandra.myflickr.models.FlickrPhoto;
 import com.chandra.myflickr.utils.DeviceUtils;
-import com.facebook.drawee.view.SimpleDraweeView;
+import com.squareup.picasso.Callback;
+import com.squareup.picasso.Picasso;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -58,11 +57,9 @@ public class PhotosAdapter extends RecyclerView.Adapter<PhotosAdapter.ViewHolder
 
         final FlickrPhoto photo = mDataArray.get(position);
         String imageUrl = "";
-        int commentSum = 0;
 
         if (photo != null) {
             imageUrl = photo.getUrl();
-            commentSum = photo.getCommentSum();
         }
 
         //Config
@@ -70,19 +67,7 @@ public class PhotosAdapter extends RecyclerView.Adapter<PhotosAdapter.ViewHolder
         params.height = imageHeight;
         holder.ivPhoto.setLayoutParams(params);
 
-        //Setting
-        holder.commentCounter.setText(String.valueOf(commentSum));
-
         loadImage(holder, imageUrl);
-
-        //Event
-        holder.btnComment.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onCommentClicked(holder, photo, position);
-            }
-        });
-
 
         holder.ivPhoto.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -93,14 +78,15 @@ public class PhotosAdapter extends RecyclerView.Adapter<PhotosAdapter.ViewHolder
     }
 
     private void loadImage(final ViewHolder holder, String imageUrl) {
+        // Index 1 is the progress bar. Show it while we're loading the image.
+        holder.animator.setDisplayedChild(1);
 
-        holder.ivPhoto.setImageURI(imageUrl);
-    }
-
-    protected void onCommentClicked(final ViewHolder holder, final FlickrPhoto photo, final int position) {
-        Intent intent = CommentsActivity.newInstance(mContext, photo, position);
-        mContext.startActivity(intent);
-
+        Picasso.with(mContext).load(imageUrl).into(holder.ivPhoto, new Callback.EmptyCallback() {
+            @Override public void onSuccess() {
+                // Index 0 is the image view.
+                holder.animator.setDisplayedChild(0);
+            }
+        });
     }
 
     @Override
@@ -117,14 +103,10 @@ public class PhotosAdapter extends RecyclerView.Adapter<PhotosAdapter.ViewHolder
     protected static class ViewHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.image_view)
-        SimpleDraweeView ivPhoto;
+        ImageView ivPhoto;
 
-        @BindView(R.id.iv_comment)
-        ImageView btnComment;
-
-        @BindView(R.id.comment_counter)
-        TextView commentCounter;
-
+        @BindView(R.id.animator)
+        ViewAnimator animator;
 
         public ViewHolder(View itemView) {
             super(itemView);
