@@ -14,13 +14,19 @@ public class FlickrPhoto implements Serializable {
     private String name;
     private String url;
     private int commentSum = 0;
+    private String squareUrl;
 
     public FlickrPhoto(Photo photo) {
         this.uid = photo.getId();
         this.name = photo.getTitle();
+        squareUrl = createSquareUrl(photo);
 
         //this.commentSum = photo.getComments();
+        this.url = createUrl(photo);
 
+    }
+
+    private String createUrl(Photo photo) {
         StringBuilder sbUrl = new StringBuilder(IMAGE_URL);
         sbUrl.append(photo.getFarm());
         sbUrl.append(STATIC_FLICKR);
@@ -31,10 +37,25 @@ public class FlickrPhoto implements Serializable {
         sbUrl.append(photo.getSecret());
         sbUrl.append(".");
         sbUrl.append(photo.getOriginalFormat());
-
-        this.url = sbUrl.toString();
+        return sbUrl.toString();
     }
 
+    private String createSquareUrl(Photo photo) {
+        StringBuilder sbUrl = new StringBuilder(IMAGE_URL);
+        sbUrl.append(photo.getFarm());
+        sbUrl.append(STATIC_FLICKR);
+        sbUrl.append(photo.getServer());
+        sbUrl.append("/");
+        sbUrl.append(uid);
+        sbUrl.append("_");
+        sbUrl.append(photo.getSecret());
+        sbUrl.append("_q");
+        sbUrl.append(".");
+        sbUrl.append(photo.getOriginalFormat());
+        return sbUrl.toString();
+    }
+
+    public String getSquareUrl() { return squareUrl; }
     public String getPhotoId() { return uid; }
 
     public void setCommentSum(int commentCountSum) {

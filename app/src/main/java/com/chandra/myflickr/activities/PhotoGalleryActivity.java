@@ -226,7 +226,7 @@ public class PhotoGalleryActivity extends BaseActivity implements
 
     @Override
     public void onPhotoItemClicked(int position) {
-        Intent intent = PhotoViewerActivity.newInstance(this, mDataArray, position);
+        Intent intent = PhotoBrowserActivity.newInstance(this, mDataArray, position);
         startActivity(intent);
     }
 

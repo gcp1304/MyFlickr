@@ -3,63 +3,57 @@ package com.chandra.myflickr.activities;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.NavUtils;
-import android.support.v4.view.ViewPager;
 import android.view.MenuItem;
 
 import com.chandra.myflickr.R;
-import com.chandra.myflickr.adapters.PhotoViewerAdapter;
 import com.chandra.myflickr.models.FlickrPhoto;
 
 import java.util.ArrayList;
 
-import butterknife.BindView;
-
-public class PhotoViewerActivity extends BaseActivity {
+public class PhotoBrowserActivity extends BaseActivity {
 
     private static final String EXTRACT_DATA = "data-extract";
     private static final String EXTRACT_POSITION = "position-extract";
 
+
     protected ArrayList<FlickrPhoto> mDataArray;
-    protected PhotoViewerAdapter mAdapter;
     protected int position;
 
-    @BindView(R.id.vp_images_slider)
-    ViewPager mViewPager;
-
-    @Override
-    protected void setLayoutResource() {
-        setContentView(R.layout.activity_photoviewer);
-    }
-
     public static Intent newInstance(Context context, ArrayList<FlickrPhoto> mDataArray, int position) {
-        Intent intent = new Intent(context, PhotoViewerActivity.class);
+        Intent intent = new Intent(context, PhotoBrowserActivity.class);
         intent.putExtra(EXTRACT_DATA, mDataArray);
         intent.putExtra(EXTRACT_POSITION, position);
         return intent;
     }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        initialiseUI();
+    protected void setLayoutResource() {
+        setContentView(R.layout.activity_photo_browser);
     }
 
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
 
-    protected void initialiseUI() {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         Bundle bundle = getIntent().getExtras();
         if (bundle == null)
             finish();
+
         position = bundle.getInt(EXTRACT_POSITION);
         mDataArray = (ArrayList<FlickrPhoto>) bundle.getSerializable(EXTRACT_DATA);
 
-        mAdapter = new PhotoViewerAdapter(this, mDataArray);
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
-        mViewPager.setAdapter(mAdapter);
-        mViewPager.setCurrentItem(position);
+        PhotoFragment photoFragment = PhotoFragment.newInstance(this, mDataArray, position);
+        fragmentTransaction.add(R.id.photo_fragment_container, photoFragment);
+        fragmentTransaction.commit();
     }
 
     @Override

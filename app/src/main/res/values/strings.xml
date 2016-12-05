@@ -22,4 +22,8 @@
 
     <!-- Comments -->
     <string name="no_comments_string">No comments found! \nBe the first to add comment!!!</string>
+
+    <string name="title_activity_photo_browser">PhotoBrowserActivity</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
 </resources>

@@ -23,9 +23,9 @@ import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
 
 
-public class PhotoViewerAdapter extends PagerAdapter {
+public class PhotoViewerPagerAdapter extends PagerAdapter {
 
-    Logger logger = LoggerFactory.getLogger(PhotoViewerAdapter.class.getSimpleName());
+    Logger logger = LoggerFactory.getLogger(PhotoViewerPagerAdapter.class.getSimpleName());
 
     private Context mContext;
     private SparseArray<View> mViews;
@@ -33,7 +33,7 @@ public class PhotoViewerAdapter extends PagerAdapter {
     private ImageView mImageView;
     private ViewAnimator mAnimator;
 
-    public PhotoViewerAdapter(Context context, ArrayList<FlickrPhoto> dataArray) {
+    public PhotoViewerPagerAdapter(Context context, ArrayList<FlickrPhoto> dataArray) {
         mContext = context;
         mDataArray = dataArray;
         mViews = new SparseArray<>();

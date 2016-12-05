@@ -1,0 +1,28 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+   <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="top"
+        android:layout_weight="1"
+        >
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/vp_images_slider"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            />
+       </LinearLayout>
+    <FrameLayout
+        android:id="@+id/photo_recommendations_fragment_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_weight="0"
+        />
+
+</LinearLayout>
